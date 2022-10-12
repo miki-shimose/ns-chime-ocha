@@ -49,6 +49,7 @@
             <p>9:30, 9:45, 10:45, 11:45, 13:15, 14:15, 15:15に授業開始のチャイムがなります。<br>
                 ※上記時刻の2分前には予鈴がなります。</p>
             <p>10:35, 11:35, 12:35, 14:05, 15:05, 16:05に授業終了のチャイムがなります。</p>
+            <p><button id="timefix">時間の補正</button></p>
         </div>
         <script>
             var check_time;
@@ -57,14 +58,10 @@
             const sub_sound = new Audio("https://miki-shimose.github.io/ns-chime-ocha/asset/sub_sound.mp3");
 
             document.getElementById("on").addEventListener("click", function(){
-                document.getElementById("on").style.display ="none";
-                document.getElementById("off").style.display ="inline";
+                document.getElementById("on").style.display = "none";
+                document.getElementById("off").style.display = "inline";
 
-                display_get_time = new Date();
-                var display_seconds = "0"+display_get_time.getSeconds();
-                display_seconds = display_seconds.slice(-2);
-                console.log(display_seconds+"秒のずれを調整しました。");
-                display_seconds = Number(display_seconds + "000");  
+                display_seconds = time_fix();
                 
                 time_check();
                 setTimeout(first_time_check, 60000 - display_seconds);
@@ -75,7 +72,23 @@
                 document.getElementById("off").style.display =　"none";
                 clearInterval(check_time);
             }, false);
+            
+            document.getElementById("timefix").addEventListener("click", function(){
+                clearInterval(check_time);
+                
+                display_seconds = time_fix();
+                time_check();
+                setTimeout(first_time_check, 60000 - display_seconds);
+            }, false);
 
+            function time_fix(){
+                display_get_time = new Date();
+                var display_seconds = "0"+display_get_time.getSeconds();
+                display_seconds = display_seconds.slice(-2);
+                console.log(display_seconds+"秒のずれを調整しました。");
+                return Number(display_seconds + "000");  
+            }
+            
             function first_time_check(){
                 time_check();
                 check_time = setInterval(time_check, 60000);
