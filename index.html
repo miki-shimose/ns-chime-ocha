@@ -64,14 +64,15 @@
                 var display_seconds = "0"+display_get_time.getSeconds();
                 display_seconds = display_seconds.slice(-2);
                 console.log(display_seconds+"秒のずれを調整しました。");
-                display_seconds = Number(display_seconds + "000");                
+                display_seconds = Number(display_seconds + "000");  
+                
                 time_check();
                 setTimeout(first_time_check, 60000 - display_seconds);
             }, false);
 
             document.getElementById("off").addEventListener("click", function(){
-                document.getElementById("on").style.display ="inline";
-                document.getElementById("off").style.display ="none";
+                document.getElementById("on").style.display =　"inline";
+                document.getElementById("off").style.display =　"none";
                 clearInterval(check_time);
             }, false);
 
@@ -87,6 +88,8 @@
 
                 now_hours = now_hours.slice(-2);
                 now_minutes = now_minutes.slice(-2);
+                
+                console.log(now_hours+":"+now_minutes+":"+get_time.getSeconds());
 
                 document.getElementById('time').innerHTML = `<p>${now_hours}:${now_minutes}</p>`;
 
